@@ -15,7 +15,7 @@ export const useSocketStore = defineStore('socket', {
             this.socket.on('connect', () => {
                 console.log('Connected to server');
             });
-            this.socket.on('disconnec', () => {
+            this.socket.on('disconnect', () => {
                 console.log('Disconnected from server');
             });
         },
