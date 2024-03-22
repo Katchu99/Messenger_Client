@@ -10,7 +10,7 @@ const router = useRouter();
 const username = ref('');
 const password = ref('');
 
-if (authStore.isAuthenticated){
+if (authStore.isAuthenticated) {
     router.push({ name: 'Chat' });
 }
 
@@ -19,15 +19,18 @@ const handleRegister = async () => {
         alert('Please enter both username and password')
     }
 
-    try{
+    try {
         //Call register action in AuthStore
-        const response: any = await useRegisterStore().register(username.value, password.value);
-        if (response && response.success) {
-            // Successfully registered so reroute to login
-            router.push({ name: 'Login' });
-        } else {
-            console.error('Registration failed:', response && response.message);
+        useRegisterStore().register(username.value, password.value).then(response=>{
+            console.log(JSON.stringify(response))
         }
+        ).catch(error=>{
+            console.log(error)
+        })
+
+            
+        
+
     } catch (error) {
         console.error('Error during registration:', error)
     }

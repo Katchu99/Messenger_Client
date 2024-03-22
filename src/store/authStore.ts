@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { useSocketStore } from './socketStore';
 import bcrypt from 'bcryptjs';
+import axios from 'axios';
 
 interface AuthState {
     isAuthenticated: boolean;
@@ -20,7 +21,7 @@ export const useAuthStore = defineStore('auth', {
                 // Server auth
                 const socketStore = useSocketStore();
                 if (socketStore.socket) {
-                    socketStore.socket.emit('login', {username: username, password: hashed_password})
+                    socketStore.socket.emit('login', { username: username, password: hashed_password })
                 } else {
                     throw new Error('Socket connection not initialized');
                 }
@@ -45,34 +46,16 @@ export const useRegisterStore = defineStore('register', {
         password: ''
     }),
     actions: {
-        async register(username, password) {
-            console.log("store register function started")
+        async register(username, password): Promise<any> {
+            return new Promise((resolve,reject)=>{
             const hashed_password = bcrypt.hashSync(password, 10);
-            console.log("hashes password")
-            try {
-                const socketStore = useSocketStore();
-                if (socketStore.socket != null) {
-                        socketStore.socket!.emit('register', {username: username, password: hashed_password}, (response: any) => {
-                            if (response.success) {
-                                this.handleRegisterResponse(response);
-                            } else {
-                                console.error('Registration failed:', response.message)
-                            }   
-                        });    
-                } else {
-                    throw new Error('Socket connection not initialized');
-                }
-            } catch (error) {
-                console.error('Error during register:', error);
-            }
+
+            axios.post("http://localhost:6969/register", { "username": username, "password": hashed_password }).then(response => {
+                resolve(response.data);
+            }).catch(error => {
+                reject({ success: false, message: error })
+            })
+            })
         },
-        handleRegisterResponse(response: any) {
-            if (response.success) {
-                return response;
-            } else {
-                console.error('Register failed:', response.message)
-                return response;
-            }
-        }
     }
 })
