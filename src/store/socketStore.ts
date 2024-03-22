@@ -10,14 +10,18 @@ export const useSocketStore = defineStore('socket', {
         socket: null,
     }),
     actions: {
-        initializeSocket() {
-            this.socket  = io('http://localhost:6969');
-            this.socket.on('connect', () => {
-                console.log('Connected to server');
-            });
-            this.socket.on('disconnect', () => {
-                console.log('Disconnected from server');
-            });
+        initializeSocket(): void {
+            try {
+                this.socket  = io('http://localhost:6969');
+                this.socket.on('connect', () => {
+                    console.log('Connected to server');
+                });
+                this.socket.on('disconnect', () => {
+                    console.log('Disconnected from server');
+                });
+            } catch (error) {
+                console.error('Error initializing socket:', error);
+            }
         },
     },
 });

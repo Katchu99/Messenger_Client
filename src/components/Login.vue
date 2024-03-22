@@ -4,12 +4,13 @@
     <input type="text" v-model="username" placeholder="Username">
     <label for="password_input">Password:</label>
     <input type="password" v-model="password" placeholder="Password">
-    <button type="button" @click="handleLogin"></button>
+    <button type="button" @click="handleLogin">Login</button>
+    <button type="button" @click="rerouteRegister">Register</button>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { useAuthStore } from '../store/loginStore'
+import { useAuthStore } from '../store/authStore'
 import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore();
@@ -29,6 +30,10 @@ const handleLogin = () => {
 
     // Call Loginaction in AuthStore
     useAuthStore().login(username.value, password.value)
+}
+
+const rerouteRegister = () => {
+    router.push({ name: 'Register' })
 }
 </script>
 
