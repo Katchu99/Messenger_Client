@@ -1,19 +1,16 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import Login from "./components/Login.vue";
+//import Login from "./components/Login.vue";
+import { useRoute } from 'vue-router';
+import { io } from 'socket.io-client';
+
+const route = useRoute();
+const socket = io('http://localhost:6969')
 </script>
 
 <template>
-  <img alt="Vite logo" width="120" src="./assets/vite.svg" />
-  <img alt="Vue logo" width="120" src="./assets/logo.png" />
-  <img alt="Electron logo" width="120" src="./assets/electron.png" />
-  <img alt="TS logo" width="120" src="./assets/ts.png" />
-  <Login/>
-  <br />
-  <p class="plugins">Plugins</p>
-  <img alt="vue router logo" width="120" src="./assets/vueRouter.png" />
-  <img alt="pinia logo" width="120" src="./assets/pinia.svg" />
+  <router-view :socket="socket"></router-view>
 </template>
 
 <style>

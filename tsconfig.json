@@ -9,12 +9,15 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "isolatedModules": false,
+    "allowJs": true,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
     "skipLibCheck": true,
     "outDir": "dist/electron"
   },
   "include": ["src/electron/**/*"],
+  "exclue": ["node_modules"],
+  "types": ["socket.io-client"],
   "references": [{
     "path": "./tsconfig.node.json"
   }]
