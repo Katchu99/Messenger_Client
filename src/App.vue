@@ -4,13 +4,14 @@
 //import Login from "./components/Login.vue";
 import { useRoute } from 'vue-router';
 import { io } from 'socket.io-client';
+import { useSocketStore } from './store/socketStore';
 
 const route = useRoute();
-const socket = io('http://localhost:6969')
+useSocketStore().initializeSocket()
 </script>
 
 <template>
-  <router-view :socket="socket"></router-view>
+  <router-view></router-view>
 </template>
 
 <style>

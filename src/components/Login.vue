@@ -1,44 +1,39 @@
 <template>
     <h1>Login:</h1>
     <label for="username_input">Username:</label>
-    <input type="text" v-model="username">
+    <input type="text" v-model="username" placeholder="Username">
     <label for="password_input">Password:</label>
-    <input type="password" v-model="password">
-    <button type="button" @click="login"></button>
+    <input type="password" v-model="password" placeholder="Password">
+    <button type="button" @click="handleLogin">Login</button>
+    <button type="button" @click="rerouteRegister">Register</button>
 </template>
 
-<script lang="ts">
-import { ref, PropType } from 'vue';
-import { Socket } from 'socket.io-client';
-import bcrypt from 'bcryptjs';
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { useAuthStore } from '../store/authStore'
+import { useRouter } from 'vue-router';
 
-interface Props {
-    socket: Socket;
+const authStore = useAuthStore();
+const router = useRouter();
+
+const username = ref('');
+const password = ref('');
+
+if (authStore.isAuthenticated) {
+    router.push({ name: 'Chat' });
 }
 
-export default {
-    props: {
-        socket: {
-            type: Object as PropType<Props ['socket']>,
-            required: true,
-        },
-    },
-    setup(props) {
-        const username = ref('');
-        const password = ref('');
+const handleLogin = () => {
+    if (!username.value || !password.value) {
+        alert('Please enter both username and password');
+    }
 
-        const login = () => {
-            /*const hashedPassword = bcrypt.hashSync(password.value, 10);
+    // Call Loginaction in AuthStore
+    useAuthStore().login(username.value, password.value)
+}
 
-            props.socket.emit('login', { username: username.value, password: hashedPassword });*/
-        };
-    
-        return {
-            username,
-            password,
-            login,
-        };
-    },
-};
+const rerouteRegister = () => {
+    router.push({ name: 'Register' })
+}
 </script>
 

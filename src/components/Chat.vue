@@ -50,7 +50,6 @@ const getAlign = (message: Message): CSSProperties => {
 <template>
     <div>
         <h1>MaWi</h1>
-        <input type="text" v-model="myUsername">
     <div class="message_wrapper">
         <div v-for="message in messages" :key="String(message.id)" :style="getAlign(message)">
         <strong>{{  message.username }}:</strong> {{ message.text }}

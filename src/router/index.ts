@@ -1,17 +1,28 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Chat from "../components/Chat.vue";
-//import About from "../components/About.vue";
+import Login from "../components/Login.vue";
+import Register from "../components/Register.vue";
 
 const routes = [
     {
         path: "/",
-        redirect: "/chat" //redirect from root to chat
+        redirect: "/login" //redirect from root to chat
     },
     {
         path: "/chat",
-        name: "chat",
+        name: "Chat",
         component: Chat
     },
+    {
+        path: "/login",
+        name: "Login",
+        component: Login
+    },
+    {
+        path: "/register",
+        name: "Register",
+        component: Register
+    }
 ];
 
 const router = createRouter({
