@@ -28,9 +28,9 @@ export default {
         const password = ref('');
 
         const login = () => {
-            const hashedPassword = bcrypt.hashSync(password.value, 10);
+            /*const hashedPassword = bcrypt.hashSync(password.value, 10);
 
-            props.socket.emit('login', { username: username.value, password: hashedPassword });
+            props.socket.emit('login', { username: username.value, password: hashedPassword });*/
         };
     
         return {
