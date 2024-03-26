@@ -2,11 +2,12 @@ import { createWebHistory, createRouter } from "vue-router";
 import Chat from "../components/Chat.vue";
 import Login from "../components/Login.vue";
 import Register from "../components/Register.vue";
+import Auth from "../components/Auth.vue"
 
 const routes = [
     {
         path: "/",
-        redirect: "/login" //redirect from root to chat
+        redirect: "/auth" //redirect from root to chat
     },
     {
         path: "/chat",
@@ -22,6 +23,11 @@ const routes = [
         path: "/register",
         name: "Register",
         component: Register
+    },
+    {
+        path: "/auth",
+        name: "Auth",
+        component: Auth
     }
 ];
 

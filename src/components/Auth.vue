@@ -1,34 +1,54 @@
 <template>
     <div class="body">
         <div class="authContainer">
-            <div class="header">
+            <div class="header" v-if="authState == 0">
                 LOGIN
             </div>
-            <div>
-                <v-container class="text-center">
-                    <v-row justify="center">
-                        <v-col cols="12" md="12" sm="12">
-                            <v-text-field label="Username"></v-text-field>
-                        </v-col>
-                        <v-col cols="12" md="12" sm="12">
-                            <v-text-field label="Password"></v-text-field>
-                        </v-col>
-
-                        <v-col cols="12" md="12" sm="12">
-                            <v-text-field label="Password"></v-text-field>
-                        </v-col>
-
-                    </v-row>
-                </v-container>
-
+            <div class="header" v-if="authState == 1">
+                REGISTER
             </div>
+            <div>
+                <div v-if="authState == 0">
+                    <Login />
+                </div>
+                <div v-if="authState == 1">
+                    <Register/>
+                </div>
+            </div>
+            <div v-if="authState == 0" @click="incState">
+                Registrieren?
+            </div>
+            <div v-if="authState == 1" @click="decState">
+                Bereits einen Account?
+            </div>
+
 
         </div>
 
     </div>
 </template>
 
-<style setup>
+<script lang="ts" setup>
+import Login from '../items/Login.vue';
+import Register from '../items/Register.vue';
+import { ref } from 'vue';
+import { useAuthState } from '../store/authStore';
+
+var authState  = ref(useAuthState().authState)
+
+const incState = ()=>{
+    authState.value += 1
+}
+
+const decState = ()=>{
+    authState.value -= 1
+}
+
+</script>
+
+
+
+<style >
 .body {
     background-color: rgba(14, 13, 13, 0.733);
     width: 100%;
