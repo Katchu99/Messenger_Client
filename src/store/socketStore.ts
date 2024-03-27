@@ -12,7 +12,10 @@ export const useSocketStore = defineStore('socket', {
     actions: {
         initializeSocket(): void {
             try {
-                this.socket  = io('http://localhost:6969');
+                // Muss SSL Cert Überprüfung ausschalten da self-signed
+                this.socket  = io('https://localhost:6969', {
+                    rejectUnauthorized: false //Funktioniert nicht obwohl es die Überprüfung ausschalten sollte?!
+                });
                 this.socket.on('connect', () => {
                     console.log('Connected to server');
                 });
@@ -25,4 +28,3 @@ export const useSocketStore = defineStore('socket', {
         },
     },
 });
-

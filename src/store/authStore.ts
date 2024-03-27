@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import bcrypt from 'bcryptjs';
 import axios from 'axios';
+import https from 'https';
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
@@ -10,9 +10,9 @@ export const useAuthStore = defineStore('auth', {
     actions: {
         async login(username, password): Promise<any> {
             return new Promise((resolve,reject) => {
-                const hashed_password = bcrypt.hashSync(password, 10)
-
-                axios.post("http://localhost:6969/login", {'username': username, 'password': hashed_password}).then(response => {
+                axios.post("https://localhost:6969/login", {'username': username, 'password': password}, {
+                    httpsAgent: new https.Agent({ rejectUnauthorized: false })
+                }).then(response => {
                     resolve(response.data);
                 }).catch(error =>{
                     reject({ success: false, message: error})
@@ -30,9 +30,9 @@ export const useRegisterStore = defineStore('register', {
     actions: {
         async register(username, password): Promise<any> {
             return new Promise((resolve,reject)=>{
-            const hashed_password = bcrypt.hashSync(password, 10);
-
-            axios.post("http://localhost:6969/register", { "username": username, "password": hashed_password }).then(response => {
+            axios.post("https://localhost:6969/register", { "username": username, "password": password }, {
+                httpsAgent: new https.Agent({ rejectUnauthorized: false })
+                }).then(response => {
                 resolve(response.data);
             }).catch(error => {
                 reject({ success: false, message: error })

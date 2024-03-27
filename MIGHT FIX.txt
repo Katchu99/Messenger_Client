@@ -1,0 +1,15 @@
+Example with a self-signed certificate:
+
+Client
+const fs = require("fs");
+const socket = require("socket.io-client")("https://example.com", {
+  ca: fs.readFileSync("./cert.pem")
+});
+
+Server
+const fs = require("fs");
+const server = require("https").createServer({
+  cert: fs.readFileSync("./cert.pem"),
+  key: fs.readFileSync("./key.pem")
+});
+const io = require("socket.io")(server);
