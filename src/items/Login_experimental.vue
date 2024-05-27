@@ -1,16 +1,22 @@
 <template>
-    <v-container class="text-center" @keyup.enter="handleLogin">
-        <v-row justify="center">
-            <v-col cols="12" md="6" sm="8">
-                <v-text-field v-model="username" label="Username"></v-text-field>
-            </v-col>
-            <v-col cols="12" md="6" sm="8">
-                <v-text-field v-model="password" label="Password"></v-text-field>
-            </v-col>
-
-        </v-row>
-    </v-container>
+  <v-container>
+    <v-row justify="center">
+      <v-col cols="12" md="6" sm="8">
+        <v-card class="elevation-5" color="primary" dark>
+          <v-card-title class="text-center">Login</v-card-title>
+          <v-card-text>
+            <v-form @submit.prevent="handleLogin">
+              <v-text-field v-model="username" label="Username" outlined dark></v-text-field>
+              <v-text-field v-model="password" label="Password" type="password" outlined dark></v-text-field>
+              <v-btn type="submit" color="primary" block>Login</v-btn>
+            </v-form>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
+  
 
 <script lang="ts" setup>
 import { ref } from 'vue';

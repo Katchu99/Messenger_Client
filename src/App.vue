@@ -4,10 +4,19 @@
 //import Login from "./components/Login.vue";
 import { useRoute } from 'vue-router';
 import { io } from 'socket.io-client';
-import { useSocketStore } from './store/socketStore';
+//import { useSocketStore } from './store/socketStore';
+//import { useAuthStore } from './store/authStore';
 
 const route = useRoute();
-useSocketStore().initializeSocket()
+
+/* SocketStore Initialisierung bei erfolgreichem Login in Login.vue (items) ausführen
+
+const authStore = useAuthStore();
+
+if (authStore.isAuthenticated){
+  useSocketStore().initializeSocket()
+}*/
+
 </script>
 
 <template>

@@ -15,16 +15,6 @@ const routes = [
         component: Chat
     },
     {
-        path: "/login",
-        name: "Login",
-        component: Login
-    },
-    {
-        path: "/register",
-        name: "Register",
-        component: Register
-    },
-    {
         path: "/auth",
         name: "Auth",
         component: Auth

@@ -23,5 +23,3 @@ app.use(createPinia()) //use pinia
 app.use(router) //use router
 app.use(vuetify)//vuetify
 app.mount('#app')
-
-

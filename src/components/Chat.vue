@@ -1,6 +1,17 @@
 <script setup lang="ts">
 import { ref, onMounted, CSSProperties } from 'vue';
 import { io } from 'socket.io-client';
+import { useAuthStore } from '../store/authStore';
+import { useRouter } from 'vue-router';
+
+
+const authStore = useAuthStore();
+const router = useRouter();
+
+// Check if authenticated
+if (!authStore.isAuthenticated){
+    router.push({name: 'Auth'})
+}
 
 const props = defineProps({
     name: String
@@ -20,6 +31,7 @@ interface Message {
 const myUsername = ref('User');
 
 // Connect to Socket.IO-Server
+// Makes socketStore obsolete???
 onMounted(() => {
     socket = io('http://localhost:6969');
 
