@@ -1,30 +1,20 @@
 <script setup lang="ts">
-import { ref, onMounted, CSSProperties } from "vue";
+import { ref, onMounted, CSSProperties, computed } from "vue";
 import { io } from "socket.io-client";
 import { useAuthStore } from "../store/authStore";
 import { useRouter } from "vue-router";
+import { useChatStore } from "../store/chatStore";
+import { Chat } from "../interfaces/Chat";
 
 const authStore = useAuthStore();
+const chatStore = useChatStore();
 const router = useRouter();
-const chats = ref([
-  { avatar: "https://placehold.co/40" },
-  { avatar: "https://placehold.co/40" },
-  { avatar: "https://placehold.co/40" },
-  { avatar: "https://placehold.co/40" },
-]);
-
-// Check if authenticated
-if (!authStore.isAuthenticated) {
-  router.push({ name: "Auth" });
-}
-
-const props = defineProps({
-  name: String,
-});
 
 const messages = ref<Message[]>([]);
 const newMessage = ref("");
 let socket;
+const myUsername = ref("User");
+const placeholderImgSrc = ref("https://placehold.co/40");
 
 // Defines type of message
 interface Message {
@@ -33,16 +23,27 @@ interface Message {
   text: string;
 }
 
-const myUsername = ref("User");
+// Check if authenticated
+if (!authStore.isAuthenticated) {
+  router.push({ name: "Auth" });
+}
+
+const formattedChats = computed(() =>
+  chatStore.chats.map((chat: Chat) => ({
+    chat_id: chat.chat_id,
+    chat_name: chat.chat_name,
+  }))
+);
 
 // Connect to Socket.IO-Server
 // Makes socketStore obsolete???
-onMounted(() => {
-  socket = io("http://localhost:6969");
-
-  socket.on("message", (message: Message) => {
-    messages.value.push(message);
-  });
+onMounted(async () => {
+  await chatStore.get_chats();
+  // const chats = ref(chatStore.chats)
+  // socket = io("http://localhost:6969");
+  // socket.on("message", (message: Message) => {
+  //   messages.value.push(message);
+  // });
 });
 
 // Send message Function
@@ -64,6 +65,14 @@ const getAlign = (message: Message): CSSProperties => {
     ? { textAlign: "right" }
     : { textAlign: "left" };
 };
+
+// Logout Function
+const logout = () => {
+  var logout_success = authStore.logout();
+  if (logout_success) {
+    router.push({ name: "Auth" });
+  }
+};
 </script>
 
 <template>
@@ -80,24 +89,30 @@ const getAlign = (message: Message): CSSProperties => {
     <v-container fluid style="padding: 0px">
       <v-row no-gutters>
         <!-- Overview -->
-        <v-col cols="1" class="sidebar">
+        <v-col cols="3" class="sidebar">
           <v-list dense class="sub-sidebar">
             <v-list-item
-              v-for="(chat, index) in chats"
+              v-for="(chat, index) in formattedChats"
               :key="index"
-              class="icon-item>"
+              class="chat-item"
+              :prepend-avatar="placeholderImgSrc"
             >
-              <div class="d-flex align-center justify-center">
+              <!-- <v-list-item-avatar>
                 <v-img
-                  :src="chat.avatar"
+                  :src="placeholderImgSrc"
                   class="rounded-image no-margin"
                 ></v-img>
-              </div>
+              </v-list-item-avatar> -->
+              <v-list-item-content class="chats">
+                <v-list-item-title>{{ chat.chat_name }}</v-list-item-title>
+              </v-list-item-content>
             </v-list-item>
           </v-list>
         </v-col>
         <!-- Chat -->
-        <v-col cols="11" class="chat-window"> </v-col>
+        <v-col cols="11" class="chat-window">
+          <v-btn @click="logout">Logout</v-btn>
+        </v-col>
       </v-row>
     </v-container>
   </div>
@@ -120,7 +135,10 @@ const getAlign = (message: Message): CSSProperties => {
   }
 }
 .rounded-image {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
+  margin-right: 10px;
 }
 .no-margin {
   margin: 0;
@@ -132,5 +150,9 @@ const getAlign = (message: Message): CSSProperties => {
 }
 .chat-window {
   background-color: #121214;
+}
+
+.chats {
+  color: white;
 }
 </style>
