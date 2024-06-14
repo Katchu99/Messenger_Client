@@ -80,7 +80,7 @@ const handleRegister = async () => {
           class="input-field"
           :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
           :type="showPassword ? 'text' : 'password'"
-          @click:append="showPassword = !showPassword"
+          @click:append-inner="showPassword = !showPassword"
         />
       </v-col>
 
@@ -92,7 +92,7 @@ const handleRegister = async () => {
           class="input-field"
           :append-inner-icon="showPasswordConfirm ? 'mdi-eye' : 'mdi-eye-off'"
           :type="showPasswordConfirm ? 'text' : 'password'"
-          @click:append="showPasswordConfirm = !showPasswordConfirm"
+          @click:append-inner="showPasswordConfirm = !showPasswordConfirm"
         />
       </v-col>
 

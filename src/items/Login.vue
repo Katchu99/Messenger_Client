@@ -2,7 +2,6 @@
 import { ref, watchEffect } from "vue";
 import { useAuthStore } from "../store/authStore";
 import { useRouter } from "vue-router";
-import { TRUE } from "sass";
 
 const authStore = useAuthStore();
 const router = useRouter();
@@ -25,20 +24,6 @@ const handleLogin = async () => {
   }
 
   try {
-    // Call login function in authStore
-    // authStore
-    //   .login(username.value, password.value, remember_me.value)
-    //   .then((response) => {
-    //     if (response.success) {
-    //       console.info(`DEBUG: ${response.user_id}`);
-    //       router.push({ name: "Chat", params: { uuid: response.user_id } }); // Wird iwie nicht gerouted obwohl success
-    //     } else {
-    //       console.error(response.message);
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
     const response = await authStore.login(
       username.value,
       password.value,
@@ -55,6 +40,7 @@ const handleLogin = async () => {
     console.error("Error during login:", error);
   }
 };
+
 </script>
 
 <template>
@@ -71,7 +57,7 @@ const handleLogin = async () => {
           class="input-field"
           :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
           :type="showPassword ? 'text' : 'password'"
-          @click:append="showPassword = !showPassword"
+          @click:append-inner="showPassword = !showPassword"
         />
         <div class="login_checkbox">
           <input type="checkbox" v-model="remember_me" />
