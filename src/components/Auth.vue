@@ -43,8 +43,12 @@ function onShowSnackbar(message: String, color: String) {
           <Register @showSnackbar="onShowSnackbar" />
         </div>
       </div>
-      <div v-if="authState == 0" @click="incState">Registrieren?</div>
-      <div v-if="authState == 1" @click="decState">Bereits einen Account?</div>
+      <div v-if="authState == 0" @click="incState" style="color: #ccc">
+        Registrieren?
+      </div>
+      <div v-if="authState == 1" @click="decState" style="color: #ccc">
+        Bereits einen Account?
+      </div>
     </div>
     <Snackbar ref="snackbarRef" />
   </div>
