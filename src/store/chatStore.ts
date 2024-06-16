@@ -16,6 +16,7 @@ export const useChatStore = defineStore("chat", {
       try {
         axios.defaults.baseURL = "http://localhost:6969";
         axios.defaults.headers.common["Authorization"] = `Bearer ${this.token}`;
+        axios.defaults.headers.common["Content-Type"] = "application/json";
 
         const response = await axios.get(`/chat/${this.user.id}`);
 

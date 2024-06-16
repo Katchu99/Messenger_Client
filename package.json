@@ -64,6 +64,7 @@
   },
   "devDependencies": {
     "@types/socket.io-client": "^3.0.0",
+    "@types/vue-router": "^2.0.0",
     "@vitejs/plugin-vue": "^2.3.3",
     "concurrently": "^7.2.2",
     "electron": "^25.3.2",

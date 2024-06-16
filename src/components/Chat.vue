@@ -111,7 +111,7 @@ const logout = () => {
         </v-col>
         <!-- Chat -->
         <v-col cols="11" class="chat-window">
-          <v-btn @click="logout">Logout</v-btn>
+          <v-btn class="logout_button" @click="logout">Logout</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -150,6 +150,10 @@ const logout = () => {
 }
 .chat-window {
   background-color: #121214;
+}
+
+.logout_button {
+  background-color: black;
 }
 
 .chats {

@@ -6,13 +6,14 @@ import { useAuthStore } from "../store/authStore";
 const routes = [
   {
     path: "/",
-    redirect: "/auth", //redirect from root to chat
+    redirect: "/auth", //redirect from root to auth
   },
   {
     path: "/chat/:uuid",
     name: "Chat",
     component: Chat,
     meta: { requiresAuth: true },
+    // redirect: "/auth",
   },
   {
     path: "/auth",
@@ -44,7 +45,7 @@ router.beforeEach((to, from, next) => {
       next("/auth");
     }
   } else {
-    next(); // Allow access for publice paths
+    next(); // Allow access for public paths
   }
 });
 
