@@ -23,11 +23,6 @@ interface Message {
   text: string;
 }
 
-// Check if authenticated
-if (!authStore.isAuthenticated) {
-  router.push({ name: "Auth" });
-}
-
 const formattedChats = computed(() =>
   chatStore.chats.map((chat: Chat) => ({
     chat_id: chat.chat_id,
@@ -38,6 +33,18 @@ const formattedChats = computed(() =>
 // Connect to Socket.IO-Server
 // Makes socketStore obsolete???
 onMounted(async () => {
+  // Check if authenticated
+  if (!authStore.isAuthenticated) {
+    router.push({ name: "Auth" });
+    return;
+  }
+
+  if (!chatStore.user.id) {
+    console.error("User ID is not available.");
+    router.push({ name: "Auth" });
+    return;
+  }
+
   await chatStore.get_chats();
   // const chats = ref(chatStore.chats)
   // socket = io("http://localhost:6969");

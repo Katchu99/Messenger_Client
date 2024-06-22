@@ -4,7 +4,7 @@ import https from "https";
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
-    isLoggedIn: !!localStorage.getItem("token"),
+    isLoggedIn: false,
     user: {
       id: localStorage.getItem("user.id") || null,
       name: localStorage.getItem("user.name") || null,
@@ -32,7 +32,6 @@ export const useAuthStore = defineStore("auth", {
           this.user.id = user_id;
 
           localStorage.setItem("token", access_token);
-          localStorage.setItem("isLoggedIn", "true");
           localStorage.setItem("user.name", username);
           localStorage.setItem("user.id", user_id);
         }
@@ -64,7 +63,6 @@ export const useAuthStore = defineStore("auth", {
       this.user.id = null;
 
       localStorage.removeItem("token");
-      localStorage.removeItem("isLoggedIn");
       localStorage.removeItem("user.name");
       localStorage.removeItem("user.id");
 
