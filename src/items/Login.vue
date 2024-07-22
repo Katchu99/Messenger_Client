@@ -2,6 +2,7 @@
 import { ref, watchEffect } from "vue";
 import { useAuthStore } from "../store/authStore";
 import { useRouter } from "vue-router";
+import axios from "axios";
 
 const authStore = useAuthStore();
 const router = useRouter();
@@ -11,8 +12,33 @@ const password = ref("");
 const remember_me = ref(false);
 var showPassword = ref(false);
 
-watchEffect(() => {
-  if (authStore.isAuthenticated() && authStore.user.id) {
+async function checkAuthentication() {
+  try {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const response = await axios.get("http://localhost:6969/check-token", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.data.isAuthenticated) {
+        authStore.setUser(response.data.user);
+        return true;
+      } else {
+        authStore.logout();
+        return false;
+      }
+    }
+  } catch (error) {
+    console.error("Error checking token:", error);
+    authStore.logout();
+    return false;
+  }
+}
+
+watchEffect(async () => {
+  const isAuthenticated = await checkAuthentication();
+  if (isAuthenticated && authStore.user.id) {
     router.push({ name: "Chat", params: { uuid: authStore.user.id } });
   }
 });
@@ -32,7 +58,7 @@ const handleLogin = async () => {
 
     if (response.success) {
       console.info(`response.success: ${response.success}`);
-      router.push({ name: "Chat", params: { uuid: response.user_id } });
+      router.push({ name: "Chat", params: { uuid: response.user.id } });
     } else {
       console.error(response.message);
     }
@@ -40,7 +66,6 @@ const handleLogin = async () => {
     console.error("Error during login:", error);
   }
 };
-
 </script>
 
 <template>

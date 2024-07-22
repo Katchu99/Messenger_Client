@@ -23,20 +23,20 @@ export const useAuthStore = defineStore("auth", {
           password,
           remember_me,
         });
-        const { success, message, access_token, user_id } = response.data;
+        const { success, message, access_token, user } = response.data;
 
         if (success) {
           this.token = access_token;
           this.isLoggedIn = true;
-          this.user.name = username;
-          this.user.id = user_id;
+          this.user.id = user.id;
+          this.user.name = user.name;
 
           localStorage.setItem("token", access_token);
-          localStorage.setItem("user.name", username);
-          localStorage.setItem("user.id", user_id);
+          localStorage.setItem("user.id", user.id);
+          localStorage.setItem("user.name", user.name);
         }
 
-        return { success, message, access_token, user_id };
+        return { success, message, access_token, user };
       } catch (error) {
         return { success: false, message: error.message };
       }
@@ -72,6 +72,11 @@ export const useAuthStore = defineStore("auth", {
 
     isAuthenticated(): boolean {
       return !!localStorage.getItem("token");
+    },
+
+    setUser(user) {
+      this.user.id = user.id;
+      this.user.name = user.name;
     },
   },
 });

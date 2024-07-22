@@ -134,6 +134,7 @@ const logout = () => {
   left: 0px;
   padding: 0px;
 }
+
 .sidebar {
   background-color: #1b1b1d;
   height: 100vh;
@@ -141,20 +142,24 @@ const logout = () => {
     background-color: #1b1b1d;
   }
 }
+
 .rounded-image {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   margin-right: 10px;
 }
+
 .no-margin {
   margin: 0;
 }
+
 .icon-item {
   background-color: #1b1b1d;
   justify-content: center;
   width: 100%;
 }
+
 .chat-window {
   background-color: #121214;
 }
