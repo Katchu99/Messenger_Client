@@ -23,9 +23,6 @@ This project is still under active development and is not yet considered stable.
 * Install dependencies: `npm install`
 * Run the application: `npm start`
 
-## Screenshots
-
-* [Add screenshots of the application in use]
 
 ## Contributing
 
