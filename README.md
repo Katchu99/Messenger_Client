@@ -23,6 +23,9 @@ This project is still under active development and is not yet considered stable.
 * Install dependencies: `npm install`
 * Run the application: `npm start`
 
+## Screenshots
+
+![ClientAuthScreenshot](https://github.com/user-attachments/assets/18706bba-f78c-401c-ab9b-af49057f3b21)
 
 ## Contributing
 
