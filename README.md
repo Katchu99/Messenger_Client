@@ -19,9 +19,18 @@ This project is still under active development and is not yet considered stable.
 
 ## Usage
 
-* Clone the repository: `git clone https://github.com/your-username/messenger-client.git`
-* Install dependencies: `npm install`
-* Run the application: `npm start`
+* Clone the repository:
+  ```bash
+   git clone https://github.com/your-username/messenger-client.git
+  ```
+* Install dependencies:
+  ```bash
+  npm install
+  ```
+* Run the application:
+  ```bash
+   npm start
+  ```
 
 ## Screenshots
 
