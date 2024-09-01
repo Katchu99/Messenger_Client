@@ -1,22 +1,9 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-//import Login from "./components/Login.vue";
-import { useRoute } from 'vue-router';
-import { io } from 'socket.io-client';
-//import { useSocketStore } from './store/socketStore';
-//import { useAuthStore } from './store/authStore';
+import { useRoute } from "vue-router";
 
 const route = useRoute();
-
-/* SocketStore Initialisierung bei erfolgreichem Login in Login.vue (items) ausführen
-
-const authStore = useAuthStore();
-
-if (authStore.isAuthenticated){
-  useSocketStore().initializeSocket()
-}*/
-
 </script>
 
 <template>
@@ -32,9 +19,9 @@ if (authStore.isAuthenticated){
   color: #2c3e50;
   margin-top: 60px;
 }
-img {
+/* img {
   margin: 5px;
-}
+} */
 .plugins {
   font-size: 20px;
   font-weight: bold;
