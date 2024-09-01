@@ -11,7 +11,6 @@ export const useChatStore = defineStore("chat", {
       id: localStorage.getItem("user.id") || null,
       name: localStorage.getItem("user.name") || null,
     },
-    token: localStorage.getItem("token"),
   }),
   actions: {
     async get_chats(): Promise<any> {
@@ -28,8 +27,7 @@ export const useChatStore = defineStore("chat", {
           throw new Error("User ID or Token is null or undefined");
         }
 
-        axios.defaults.baseURL = "http://localhost:6969";
-        axios.defaults.headers.common["Authorization"] = `Bearer ${this.token}`;
+        axios.defaults.baseURL = "http://localhost:5000";
         axios.defaults.headers.common["Content-Type"] = "application/json";
 
         const response = await axios.get(`/chat/${this.user.id}`);
@@ -62,8 +60,6 @@ export const useChatStore = defineStore("chat", {
     },
 
     handleInvalidToken() {
-      localStorage.removeItem("token");
-      this.token = null;
       alert("Your session expired. Please log-in.");
 
       const router = useRouter();

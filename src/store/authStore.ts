@@ -9,7 +9,6 @@ export const useAuthStore = defineStore("auth", {
       id: localStorage.getItem("user.id") || null,
       name: localStorage.getItem("user.name") || null,
     },
-    token: localStorage.getItem("token"),
   }),
   actions: {
     async login(
@@ -18,25 +17,30 @@ export const useAuthStore = defineStore("auth", {
       remember_me: boolean
     ): Promise<any> {
       try {
-        const response = await axios.post("http://localhost:6969/login", {
-          username: username,
-          password,
-          remember_me,
-        });
-        const { success, message, access_token, user } = response.data;
+        const response = await axios.post(
+          "http://localhost:5000/login",
+          {
+            username: username,
+            password,
+            remember_me,
+          },
+          {
+            withCredentials: true,
+          }
+        );
+        const { success, message, user } = response.data;
 
         if (success) {
-          this.token = access_token;
           this.isLoggedIn = true;
           this.user.id = user.id;
           this.user.name = user.name;
 
-          localStorage.setItem("token", access_token);
-          localStorage.setItem("user.id", user.id);
-          localStorage.setItem("user.name", user.name);
+          // localStorage.setItem("token", access_token); // change this to cookie token use
+          // localStorage.setItem("user.id", user.id);
+          // localStorage.setItem("user.name", user.name);
         }
 
-        return { success, message, access_token, user };
+        return { success, message, user };
       } catch (error) {
         return { success: false, message: error.message };
       }
@@ -57,12 +61,11 @@ export const useAuthStore = defineStore("auth", {
     },
 
     logout() {
-      this.token = null;
       this.isLoggedIn = false;
       this.user.name = null;
       this.user.id = null;
 
-      localStorage.removeItem("token");
+      localStorage.removeItem("token"); //remove
       localStorage.removeItem("user.name");
       localStorage.removeItem("user.id");
 
@@ -90,7 +93,7 @@ export const useRegisterStore = defineStore("register", {
     async register(username, password): Promise<any> {
       return new Promise((resolve, reject) => {
         axios
-          .post("http://localhost:6969/register", {
+          .post("http://localhost:5000/register", {
             username: username,
             password: password,
           })

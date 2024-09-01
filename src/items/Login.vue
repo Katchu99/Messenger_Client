@@ -14,23 +14,16 @@ var showPassword = ref(false);
 
 async function checkAuthentication() {
   try {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const response = await axios.get("http://localhost:6969/check-token", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (response.data.isAuthenticated) {
-        authStore.setUser(response.data.user);
-        return true;
-      } else {
-        authStore.logout();
-        return false;
-      }
+    const response = await axios.get(`${/*VUE_APP_API_BASE_URL*/}/check-auth`, {});
+    if (response.data.isAuthenticated) {
+      authStore.setUser(response.data.user);
+      return true;
+    } else {
+      authStore.logout();
+      return false;
     }
   } catch (error) {
-    console.error("Error checking token:", error);
+    console.error("Error checking authorization:", error);
     authStore.logout();
     return false;
   }
