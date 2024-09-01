@@ -53,6 +53,11 @@ onMounted(async () => {
   // });
 });
 
+// Select Chat Function
+const selectChat = (chat_id: String) => {
+  // router.push({ name: "Chat", params: { uuid: chat_id } });
+};
+
 // Send message Function
 const sendMessage = () => {
   if (newMessage.value.trim() === "") return;
@@ -83,15 +88,6 @@ const logout = () => {
 </script>
 
 <template>
-  <!-- <div>
-        <h1>MaWi</h1>
-    <div class="message_wrapper">
-        <div v-for="message in messages" :key="String(message.id)" :style="getAlign(message)">
-        <strong>{{  message.username }}:</strong> {{ message.text }}
-        </div>
-    </div>
-        <input type="text" v-model="newMessage" @keyup.enter="sendMessage">
-    </div> -->
   <div class="chatbody">
     <v-container fluid style="padding: 0px">
       <v-row no-gutters>
@@ -101,15 +97,10 @@ const logout = () => {
             <v-list-item
               v-for="(chat, index) in formattedChats"
               :key="index"
+              @click="selectChat(chat.chat_id)"
               class="chat-item"
               :prepend-avatar="placeholderImgSrc"
             >
-              <!-- <v-list-item-avatar>
-                <v-img
-                  :src="placeholderImgSrc"
-                  class="rounded-image no-margin"
-                ></v-img>
-              </v-list-item-avatar> -->
               <v-list-item-content class="chats">
                 <v-list-item-title>{{ chat.chat_name }}</v-list-item-title>
               </v-list-item-content>
@@ -118,7 +109,16 @@ const logout = () => {
         </v-col>
         <!-- Chat -->
         <v-col cols="11" class="chat-window">
-          <v-btn class="logout_button" @click="logout">Logout</v-btn>
+          <div class="message_wrapper">
+            <div
+              v-for="message in messages"
+              :key="String(message.id)"
+              :style="getAlign(message)"
+            >
+              <strong>{{ message.username }}:</strong> {{ message.text }}
+            </div>
+          </div>
+          <input type="text" v-model="newMessage" @keyup.enter="sendMessage" />
         </v-col>
       </v-row>
     </v-container>
@@ -133,14 +133,32 @@ const logout = () => {
   top: 0px;
   left: 0px;
   padding: 0px;
+  background-color: #f0f0f0; /* Hintergrundfarbe */
 }
 
 .sidebar {
-  background-color: #1b1b1d;
+  background-color: #1b1b1d; /* Hintergrundfarbe der Sidebar */
   height: 100vh;
   .sub-sidebar {
     background-color: #1b1b1d;
   }
+}
+
+.chat-window {
+  background-color: #121214; /* Hintergrundfarbe des Chat-Fensters */
+}
+
+.logout_button {
+  background-color: black; /* Hintergrundfarbe des Logout-Buttons */
+  color: white; /* Textfarbe des Logout-Buttons */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.chats {
+  color: white; /* Textfarbe der Chat-Nachrichten */
 }
 
 .rounded-image {
@@ -158,17 +176,5 @@ const logout = () => {
   background-color: #1b1b1d;
   justify-content: center;
   width: 100%;
-}
-
-.chat-window {
-  background-color: #121214;
-}
-
-.logout_button {
-  background-color: black;
-}
-
-.chats {
-  color: white;
 }
 </style>
