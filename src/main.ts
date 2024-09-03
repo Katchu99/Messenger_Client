@@ -12,10 +12,6 @@ import * as directives from "vuetify/directives";
 // Material-Icons
 import "@mdi/font/css/materialdesignicons.css";
 
-// Load .env file
-import dotenv from "dotenv";
-dotenv.config();
-
 const vuetify = createVuetify({
   components,
   directives,

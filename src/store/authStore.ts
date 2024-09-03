@@ -18,7 +18,7 @@ export const useAuthStore = defineStore("auth", {
     ): Promise<any> {
       try {
         const response = await axios.post(
-          "http://localhost:5000/login",
+          `${process.env.API_BASE_URL}/login`,
           {
             username: username,
             password,
@@ -93,7 +93,7 @@ export const useRegisterStore = defineStore("register", {
     async register(username, password): Promise<any> {
       return new Promise((resolve, reject) => {
         axios
-          .post("http://localhost:5000/register", {
+          .post(`${process.env.VUE_APP_API_URL}/register`, {
             username: username,
             password: password,
           })

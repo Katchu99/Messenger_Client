@@ -27,7 +27,7 @@ export const useChatStore = defineStore("chat", {
           throw new Error("User ID or Token is null or undefined");
         }
 
-        axios.defaults.baseURL = "http://localhost:5000";
+        axios.defaults.baseURL = process.env.API_BASE_URL;
         axios.defaults.headers.common["Content-Type"] = "application/json";
 
         const response = await axios.get(`/chat/${this.user.id}`);

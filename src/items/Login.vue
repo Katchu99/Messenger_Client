@@ -14,7 +14,10 @@ var showPassword = ref(false);
 
 async function checkAuthentication() {
   try {
-    const response = await axios.get(`${/*VUE_APP_API_BASE_URL*/}/check-auth`, {});
+    const response = await axios.get(
+      `${process.env.VUE_APP_API_URL}/check-auth`,
+      {}
+    );
     if (response.data.isAuthenticated) {
       authStore.setUser(response.data.user);
       return true;
