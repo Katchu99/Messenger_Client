@@ -27,9 +27,9 @@ This project is still under active development and is not yet considered stable.
   ```bash
   npm install
   ```
-* Run the application:
+* Run the application (currently only dev mode):
   ```bash
-   npm start
+   npm run app:dev
   ```
 
 ## Screenshots
